@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model sensor {
+  id               String    @id
+  puresenseId      String
+  voltage          Float
+  analogReadValue  Int
+  digitalReadValue Int
+  NTU              Float
+  statusKejernihan String
+  puresense        puresense @relation(fields: [puresenseId], references: [id])
+}
+
+model puresense {
+  id     String   @id
+  status String
+  sensor sensor[]
+}
